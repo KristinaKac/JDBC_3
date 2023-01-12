@@ -15,7 +15,7 @@ public class JdbcController {
         this.jdbcRepository = jdbcRepository;
     }
     @GetMapping("/products/fetch-product")
-    public List<Map<String, Object>> getSql(@RequestParam String name) {
+    public List<String> getSql(@RequestParam String name) {
         return jdbcRepository.getProductName(name);
     }
 

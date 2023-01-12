@@ -15,11 +15,12 @@ import java.util.stream.Collectors;
 
 @Repository
 public class JdbcRepository {
-    String mySql = read("myScript.sql");
+    String mySql;
     NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     public JdbcRepository(NamedParameterJdbcTemplate namedParameterJdbcTemplate){
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
+        mySql = read("myScript.sql");
     }
 
     private static String read(String scriptFileName) {
@@ -30,9 +31,9 @@ public class JdbcRepository {
             throw new RuntimeException(e);
         }
     }
-    public List<Map<String, Object>> getProductName(String name){
+    public List<String> getProductName(String name){
         MapSqlParameterSource namedParameters = new MapSqlParameterSource();
         namedParameters.addValue("name", name);
-        return namedParameterJdbcTemplate.queryForList(mySql, namedParameters);
+        return namedParameterJdbcTemplate.queryForList(mySql, namedParameters, String.class);
     }
 }
